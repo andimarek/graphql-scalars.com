@@ -69,16 +69,50 @@ The outcome of the result Coercion should always be a String formatted as "date-
 
 # Literal Coercion
 
-Only String literals are accepted formatted as "date-time" as described above. The outcome value is implementation specific, but the value should accurately capture a "date-time" as described above. It is especially discouraged to use  a value with a time zone instead of an offset, because time zone to offset conversion is non trivial.   
+## Input
+
+Only String literals are accepted formatted as "date-time" as described above. 
+
+## Output
+
+The output value is implementation specific, but the value should accurately capture a "date-time" as described above. It is especially discouraged to use  a value with a time zone instead of an offset, because time zone to offset conversion is non trivial.   
 
 # Value Coercion
 
-The specific values for Input Coercion are implementation specific, but they should be semantically equivalent to "date-time" without any conversion.
+## Input
 
+The specific values for the input are implementation specific, but they should be semantically equivalent to "date-time" without any conversion.
 It is especially discouraged to accept values with time zones instead of offsets, because the conversion from time zone to offset is non trivial. 
+
+## Output
+
+Implementation specific.
 
 
 # Test cases
+
+These are valid Strings accepted for the input of Literal Coercion and valid as output of 
+Result Coercion:
+
+
+| String        | Explanation 
+| ------------- |-------------
+| `2011-08-30T13:22:53.108Z` | A DateTime with UTC offset (+00:00).
+| `2011-08-30T13:22:53.108-03` | A DateTime with -3h offset.
+| `2011-08-30T13:22:53.108+03:30` | A DateTime with +3h 30min offset.
+
+These are invalid Strings which should be rejected as Liternal Coercion Input and should not 
+be an output of Result Coercion:
+
+
+| String        | Why is it invalid 
+| ------------- |-------------
+| `2011-08-30T13:22:53.108912Z` | Too many digits for fractions of a second. Exactly three expected.
+| `2011-08-30T13:22:53.108` | No offset provided.
+| `2011-08-30` | No time provided.
+| `2011-08-30T13:22:53.108-00:00` | Negative offset (`-00:00`) is not allowed
+
+
 
 
 <Link to="/">Go back to the homepage</Link>
