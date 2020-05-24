@@ -1,0 +1,84 @@
+import { Link } from 'gatsby'
+import Layout from '../components/layout'
+import SEO from '../components/seo'
+
+<SEO title="DateTime Scalar specification" />
+
+<h1>DateTime Scalar spec</h1>
+
+```toc
+# This code block gets replaced with the TOC
+```
+
+Specification for a custom GraphQL Scalar which represents an exact point in time. This point in time is specified by having an offset to UTC and does not use time zone.  
+
+# Based on RFC 3339
+
+This Scalar is a slightly refined version of [RFC 3339](https://tools.ietf.org/html/rfc3339) including the [errata](https://www.rfc-editor.org/errata/rfc3339).
+
+All definitions of RFC 3339 are adopted and nothing is added or removed unless explicitly mentioned here.
+
+The following refinements/clarifications apply:
+
+##  Only "date-time"
+
+This scalar represents a “date-time” as specified in [section 5.6 of RFC 3339](https://tools.ietf.org/html/rfc3339#section-5.6). 
+
+The other productions in section 5.6 are only used to support "date-time" but never stand alone for this Scalar. 
+
+
+## Exact milliseconds
+
+RFC 3339 defines `time-secfrac` as:
+
+```
+time-secfrac    = "." 1*DIGIT
+```
+
+This allows for an unlimited numbers of digits. For this scalar the rule is refined as:
+
+```
+time-secfrac    = "." DIGIT DIGIT DIGIT
+```
+
+consisting always of exact three digits representing milliseconds.
+
+
+## No 'Unknown Local Offset Convention'
+
+[Section 4.3](https://tools.ietf.org/html/rfc3339#section-4.3) says: 
+
+```
+If the time in UTC is known, but the offset to local time is unknown, 
+this can be represented with an offset of "-00:00".
+```
+
+In order to simplify this Scalar this convention is dropped and an offset of `-00:00` is not allowed.
+
+
+# Result Coercion
+
+## Input
+
+The accepted values are implementation specific, but it is recommend to accept Strings and other types representing Dates. 
+
+
+## Output
+
+The outcome of the result Coercion should always be a String formatted as "date-time" as described above.
+
+# Literal Coercion
+
+Only String literals are accepted formatted as "date-time" as described above. The outcome value is implementation specific, but the value should accurately capture a "date-time" as described above. It is especially discouraged to use  a value with a time zone instead of an offset, because time zone to offset conversion is non trivial.   
+
+# Value Coercion
+
+The specific values for Input Coercion are implementation specific, but they should be semantically equivalent to "date-time" without any conversion.
+
+It is especially discouraged to accept values with time zones instead of offsets, because the conversion from time zone to offset is non trivial. 
+
+
+# Test cases
+
+
+<Link to="/">Go back to the homepage</Link>
