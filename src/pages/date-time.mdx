@@ -29,13 +29,14 @@ The other productions in section 5.6 are only used to support "date-time" but ne
 
 ## Exact milliseconds
 
-RFC 3339 defines `time-secfrac` as:
+RFC 3339 defines `time-secfrac` optional as: 
 
 ```
-time-secfrac    = "." 1*DIGIT
+time-secfrac    = "." 1*DIGIT (Meaning 1 or more DIGIT)
 ```
 
-This allows for an unlimited numbers of digits. For this scalar the rule is refined as:
+This allows for an unlimited numbers of digits. For this scalar the rule is not optional anymore and
+refined as:
 
 ```
 time-secfrac    = "." DIGIT DIGIT DIGIT
