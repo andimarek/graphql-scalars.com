@@ -98,7 +98,9 @@ Result Coercion:
 | String        | Explanation 
 | ------------- |-------------
 | `2011-08-30T13:22:53.108Z` | A DateTime with UTC offset (+00:00).
-| `2011-08-30T13:22:53.108-03` | A DateTime with -3h offset.
+| `2011-08-30T13:22:53.108+00:00` | A DateTime with `+00:00` which is the same as UTC.
+| `2011-08-30t13:22:53.108z` |  The `z` and `t` may be lower case.
+| `2011-08-30T13:22:53.108-03:00` | A DateTime with +3h offset.
 | `2011-08-30T13:22:53.108+03:30` | A DateTime with +3h 30min offset.
 
 These are invalid Strings which should be rejected as Liternal Coercion Input and should not 
@@ -107,10 +109,14 @@ be an output of Result Coercion:
 
 | String        | Why is it invalid 
 | ------------- |-------------
+| `2011-08-30T13:22:53.108-03` | The minutes of the offset are missing.
 | `2011-08-30T13:22:53.108912Z` | Too many digits for fractions of a second. Exactly three expected.
+| `2011-08-30T24:22:53Z` | Fractions of a second are missing.
 | `2011-08-30T13:22:53.108` | No offset provided.
 | `2011-08-30` | No time provided.
 | `2011-08-30T13:22:53.108-00:00` | Negative offset (`-00:00`) is not allowed
+| `2011-08-30T13:22:53.108+03:30:15` | Seconds are not allowed for the offset
+| `2011-08-30T24:22:53.108Z` | `24` is not allowed as hour of the time.
 
 
 
