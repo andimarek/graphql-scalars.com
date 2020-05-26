@@ -27,7 +27,7 @@ This scalar represents a “date-time” as specified in [section 5.6 of RFC 333
 The other productions in section 5.6 are only used to support "date-time" but never stand alone for this Scalar. 
 
 
-## Exact milliseconds
+## Non optional exact milliseconds
 
 RFC 3339 defines `time-secfrac` optional as: 
 
@@ -63,10 +63,11 @@ In order to simplify this Scalar this convention is dropped and an offset of `-0
 
 The accepted values are implementation specific, but it is recommend to accept Strings and other types representing Dates. 
 
-
 ## Output
 
 The outcome of the result Coercion should always be a String formatted as "date-time" as described above.
+
+UTC offset should be formatted as `Z` and not `+00:00` and lower case `z` and `t` should be converted to `Z` and `T`.
 
 # Literal Coercion
 
@@ -92,19 +93,18 @@ Implementation specific.
 
 # Test cases
 
-These are valid Strings accepted for the input of Literal Coercion and valid as output of 
-Result Coercion:
 
+These are valid Strings accepted for the input of Literal Coercion: 
 
 | String        | Explanation 
 | ------------- |-------------
 | `2011-08-30T13:22:53.108Z` | A DateTime with UTC offset (+00:00).
 | `2011-08-30T13:22:53.108+00:00` | A DateTime with `+00:00` which is the same as UTC.
 | `2011-08-30t13:22:53.108z` |  The `z` and `t` may be lower case.
-| `2011-08-30T13:22:53.108-03:00` | A DateTime with +3h offset.
+| `2011-08-30T13:22:53.108-03:00` | A DateTime with -3h offset.
 | `2011-08-30T13:22:53.108+03:30` | A DateTime with +3h 30min offset.
 
-These are invalid Strings which should be rejected as Liternal Coercion Input and should not 
+These are invalid Strings which should be rejected as Literal Coercion Input and should not 
 be an output of Result Coercion:
 
 
@@ -118,13 +118,14 @@ be an output of Result Coercion:
 | `2011-08-30T13:22:53.108-00:00` | Negative offset (`-00:00`) is not allowed
 | `2011-08-30T13:22:53.108+03:30:15` | Seconds are not allowed for the offset
 | `2011-08-30T24:22:53.108Z` | `24` is not allowed as hour of the time.
+| `2010-02-30T21:22:53.108Z` | 30th of February is not a valid date
+| `2010-02-11T21:22:53.108Z+25:11` | 25 is not a valid hour for offset
 
 
 # Recommended Scalar name
 
 The obvious recommended name for the Scalar is `DateTime`.
-If this name is not available one alternatives is `OffsetDateTime` which describes the Scalar quite 
-accurately.
+If this name is not available then one alternative is `OffsetDateTime`, which describes the Scalar quite accurately.
 
 
 <Link to="/">Go back to the homepage</Link>
