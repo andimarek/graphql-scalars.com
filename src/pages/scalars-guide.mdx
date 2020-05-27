@@ -30,7 +30,7 @@ Every function has an input and produces an output:
 
 | Function      | Input | Output
 | ------------- |-------------|------
-| Result Coercion  | The result of a resolver.  | A leaf of the overall excution result.
+| Result Coercion  | The result of a resolver.  | A leaf of the overall execution result.
 | Literal Coercion | An abstract syntax tree (Ast)  Literal | Is provided to an resolver as argument. 
 | Value Coercion | A value which is provided as a variable value. | Is provided to an resolver as argument.
 
@@ -39,7 +39,7 @@ Every function has an input and produces an output:
 
 Result Coercion takes the result of a resolver and converts it into an appropriate value for the result.
 
-This result value is NOT the seralized value. Serialization is an extra step.
+This result value is NOT the serialized value. Serialization is an extra step.
 
 ## Literal Coercion 
 
@@ -65,7 +65,7 @@ Value Coercion takes a runtime values (which come from variables) and convert it
 | ------------- |-------------|--
 | Result Coercion  | No | Yes
 | Literal Coercion | Yes | No
-| Value Coercion | Yes (after seralization) | No
+| Value Coercion | Yes (after serialization) | No
 
 
 ## Flexible Input
