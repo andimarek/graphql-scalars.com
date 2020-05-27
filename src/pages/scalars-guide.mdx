@@ -68,17 +68,71 @@ A typical GraphQL request against a GraphQL service accepts JSON as serializatio
 
 ![request steps](../images/request-steps.png)
 
+A GraphQL request in JSON consists of:
+
+```JSON
+{ 
+    "query": "..." 
+    "operationName": "..."
+    "variables": {...}
+}
+```
+This JSON is then deserialized into an in-memory representation. The details how this in-memory structure 
+looks depend very much on the language you using.  
+
+This values are then used to passed into the GraphQL engine to execute the request.
+
+The result of the overall execution is an in-memory execution result which is then serialized to JSON:
+
+```JSON
+{ 
+    "data": {...} 
+    "errors": [...]
+}
+```
+
+## Result Coercion: Serialize or not
+
+(De)Serialization does not need to be complicated, but can be rather trivial for
+primitive types like string or boolean. 
+
+For Result Coercion this leaves the option of implementing the serialization into the function directly
+or returning a more complex value which then will be serialized later.
+
+For example for a `Date` scalar in JS the Result Coercion could 
+return a `Date` value or directly a formatted string.
+
+Both solutions are viable with certain tradeoffs:
+
+If the Result Coercion already returns a serialized value the Scalar is easier to
+use and the result is more predictable.
+
+On the other hand the serialization is less configurable and the Scalar 
+might not be useable for non JSON serialization use cases.   
+
+It might be worth to offer both solution and let the user of the Scalar decide.
+
 
 
 # Implementation guidelines  
 
 ## Observable or not
 
-| Function      | Input | Output
+Not every aspect of every coercion function is observable by a GraphQL consumer. 
+
+The input of Result Coercion and the outputs of Literal and Value Coercion are implementation details 
+of the GraphQL engine.
+
+But the input of Literal and Value Coercion and the output of Result Coercion are observable, meaning 
+any change to it are affecting GraphQL consumers and can break the API contract.
+
+| Function      | Input observable? | Output observable?
 | ------------- |-------------|--
-| Result Coercion  | No | Yes
+| Result Coercion  | No | Yes (after serialziation)
 | Literal Coercion | Yes | No
-| Value Coercion | Yes (after serialization) | No
+| Value Coercion | Yes (after deserialization) | No
+
+
 
 
 ## Flexible Input
