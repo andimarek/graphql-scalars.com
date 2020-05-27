@@ -25,6 +25,16 @@ Overview of the coercion functions:
 ![coercion functions](../images/coercion-functions.png)
 
 
+Every function has an input and produces an output:
+
+
+| Function      | Input | Output
+| ------------- |-------------|------
+| Result Coercion  | The result of a resolver.  | A leaf of the overall excution result.
+| Literal Coercion | An abstract syntax tree (Ast)  Literal | Is provided to an resolver as argument. 
+| Value Coercion | A value which is provided as a variable value. | Is provided to an resolver as argument.
+
+
 ## Result Coercion 
 
 Result Coercion takes the result of a resolver and converts it into an appropriate value for the result.
@@ -36,9 +46,49 @@ This result value is NOT the seralized value. Serialization is an extra step.
 Literal Coercion takes an abstract syntax tree (Ast) element from a schema definition or query and converts it into an appropriate 
 argument value for a resolver.
 
+Literal values can be arbitrary Ast elements: Strings, Ints, Enum names and even Input Objects. 
+
+There are no restrictions beside syntax. For example am Ast element can be `1234568901234567890` which 
+is actually not a valid  Integer (it is to big) but it is a valid Ast element. 
+
 ## Value Coercion 
 
-Value Coercion take runtime values (which come from variables) and convert it into an appropriate value for a resolver.
+Value Coercion takes a runtime values (which come from variables) and convert it into an appropriate value for a resolver.
+
+
+
+# Implementation guidelines  
+
+## Observable or not
+
+| Function      | Input | Output
+| ------------- |-------------|--
+| Result Coercion  | No | Yes
+| Literal Coercion | Yes | No
+| Value Coercion | Yes (after seralization) | No
+
+
+## Flexible Input
+
+The input of each coercion function should be as flexible as possible and accept different values. 
+
+
+## Literal and Value Coercion should be the consistent
+
+Because Literal and Value Coercion outputs are both provided to resolvers as arguments they 
+should produce the same values for the same logical values.
+
+
+
+| Function      | Input | Output
+| ------------- |-------------|------
+| Result Coercion  | The result of a resolver.  | A leaf of the overall excution result.
+| Literal Coercion | An abstract syntax tree (Ast)  Literal | Is provided to an resolver as argument. 
+| Value Coercion | A value which is provided as a variable value. | Is provided to an resolver as argument.
+
+
+
+# Document a custom Scalar 
 
 # Language specific guide
 
