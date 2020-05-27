@@ -55,6 +55,19 @@ is actually not a valid  Integer (it is to big) but it is a valid Ast element.
 
 Value Coercion takes a runtime values (which come from variables) and convert it into an appropriate value for a resolver.
 
+Variables are provided along with the actual query to the engine for execution. These values are often deserialized from JSON before
+provided ot the engine.
+
+# Serialization 
+
+Serialization is the process of taking some in-memory values and converting them into an appropriate format for 
+sending over a network or storing somewhere. Deserialization is the opposite: taking some format which comes from a network request
+and constructing an in-memory value from it.
+
+A typical GraphQL request against a GraphQL service accepts JSON as serialization format and produces JSON:
+
+![request steps](../images/request-steps.png)
+
 
 
 # Implementation guidelines  
@@ -73,7 +86,7 @@ Value Coercion takes a runtime values (which come from variables) and convert it
 The input of each coercion function should be as flexible as possible and accept different values. 
 
 
-## Literal and Value Coercion should be the consistent
+## Literal and Value Coercion should be consistent
 
 Because Literal and Value Coercion outputs are both provided to resolvers as arguments they 
 should produce the same values for the same logical values.
