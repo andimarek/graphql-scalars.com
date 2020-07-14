@@ -43,7 +43,7 @@ Every function has an input and produces an output:
 | Function      | Input | Output
 | ------------- |-------------|------
 | Result Coercion  | The result of a resolver.  | A leaf of the overall execution result.
-| Literal Coercion | An abstract syntax tree (Ast)  Literal | Is provided to an resolver as argument. 
+| Literal Coercion | An abstract syntax tree (AST)  Literal | Is provided to an resolver as argument. 
 | Value Coercion | A value which is provided as a variable value. | Is provided to an resolver as argument.
 
 
@@ -55,15 +55,15 @@ This result value is NOT the serialized value. Serialization is an extra step.
 
 ## Literal Coercion 
 
-Literal Coercion takes an abstract syntax tree (Ast) element from a schema definition or query and converts it into an appropriate 
+Literal Coercion takes an abstract syntax tree (AST) element from a schema definition or query and converts it into an appropriate 
 argument value for a resolver.
 
-Literal values can be arbitrary Ast elements: Strings, Ints, Enum names or Input Objects. 
+Literal values can be arbitrary AST elements: Strings, Ints, Enum names or Input Objects. 
 
-There are no restrictions beside syntax. For example am Ast element can be `1234568901234567890` which 
-is actually not a valid  Integer (it is to big) but it is a valid Ast element. 
+There are no restrictions beside syntax. For example an AST element can be `1234568901234567890` which 
+is actually not a valid  Integer (it is to big) but it is a valid AST element. 
 
-Ast elements can even be complex input objects like `{foo: "String", bar: 1234}`.
+AST elements can even be complex input objects like `{foo: "String", bar: 1234}`.
 
 ## Value Coercion 
 
@@ -94,7 +94,7 @@ A GraphQL request in JSON consists of:
 This JSON is then deserialized into an in-memory representation. The details how this in-memory structure 
 looks depend very much on the language you using.  
 
-This values are then used to passed into the GraphQL engine to execute the request.
+These values are then used to pass into the GraphQL engine to execute the request.
 
 The result of the overall execution is an in-memory execution result which is then serialized to JSON:
 
@@ -186,7 +186,7 @@ clearly document how it is suppose to be (de)serialized from/to JSON.
 
 General hint: 
 The concepts presented above are valid for all GraphQL implementations,
-but the details might differ. Especially the naming of the coercion function is not consistent
+but details may vary. Especially the naming of the coercion function is not consistent
 across eco systems.
 
 ## JavaScript
