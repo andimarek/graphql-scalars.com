@@ -54,7 +54,7 @@ A coerced input value is a value that is ready for consumption by a resolver. It
 
 Input coercion is implemented as a set of three functions `parseLiteral`, `parseRawInputValue` and `rawInputValueToLiteral`.
 
-[//]: # (dz todo: add coercion diagram)
+![image](Coercion.png)
 
 ### Parse Literal
 `parseLiteral` takes a GraphQL language literal as input and produces a coerced input value as output.

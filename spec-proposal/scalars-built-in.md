@@ -62,7 +62,7 @@ JSON String.
 
 ### Literal Input
 
-FloatValue literal. See [GraphQL spec](https://spec.graphql.org/draft/#sec-Float-Value)
+`FloatValue` literal. See [GraphQL spec](https://spec.graphql.org/draft/#sec-Float-Value)
 
 ### JSON Raw Input
 
